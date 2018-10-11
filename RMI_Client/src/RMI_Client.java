@@ -9,6 +9,7 @@ public class RMI_Client {
 		/* This might be necessary if you ever need to download classes:
 		System.getProperties().put("java.security.policy", "policy.all");
 		System.setSecurityManager(new RMISecurityManager());
+		VOU MUDAR ESTA MERDA TODA
 		*/
 
 		Scanner sc = new Scanner(System.in);
