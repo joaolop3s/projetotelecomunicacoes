@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/projeto.iml" filepath="$PROJECT_DIR$/.idea/projeto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MulticastClient/MulticastClient.iml" filepath="$PROJECT_DIR$/MulticastClient/MulticastClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MulticastServer/MulticastServer.iml" filepath="$PROJECT_DIR$/MulticastServer/MulticastServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RMI_Client/RMI_Client.iml" filepath="$PROJECT_DIR$/RMI_Client/RMI_Client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RMI_Server/RMI_Server.iml" filepath="$PROJECT_DIR$/RMI_Server/RMI_Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projeto.iml" filepath="$PROJECT_DIR$/projeto.iml" />
     </modules>
   </component>
 </project>

@@ -15,7 +15,6 @@ import java.util.Scanner;
  * Usage: java -Djava.net.preferIPv4Stack=true MulticastClient
  *
  * @author Raul Barbosa
- * ola
  * @version 1.0
  */
 public class MulticastClient extends Thread {
