@@ -4,7 +4,19 @@ import java.net.InetAddress;
 import java.io.IOException;
 import java.util.Scanner;
 
-
+/**
+ * The MulticastClient class joins a multicast group and loops receiving
+ * messages from that group. The client also runs a MulticastUser thread that
+ * loops reading a string from the keyboard and multicasting it to the group.
+ * <p>
+ * The example IPv4 address chosen may require you to use a VM option to
+ * prefer IPv4 (if your operating system uses IPv6 sockets by default).
+ * <p>
+ * Usage: java -Djava.net.preferIPv4Stack=true MulticastClient
+ *
+ * @author Raul Barbosa
+ * @version 1.0
+ */
 public class MulticastClient extends Thread {
     private String MULTICAST_ADDRESS = "224.0.224.0";
     private int PORT = 4321;

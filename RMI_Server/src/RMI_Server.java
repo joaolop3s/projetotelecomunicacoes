@@ -9,9 +9,6 @@ import java.net.MulticastSocket;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.io.IOException;
-import java.util.concurrent.CopyOnWriteArrayList;import java.util.Iterator;
-import java.util.List;
-
 
 
 public class RMI_Server extends UnicastRemoteObject implements RMI_ServerInterface {
@@ -84,12 +81,12 @@ public class RMI_Server extends UnicastRemoteObject implements RMI_ServerInterfa
 				case "login":
 					message = login(parts[3], parts[5]);
 					break;
+				case "signUp":
+					message = singUp(parts[3], parts[5]);
+					break;
 
 				case "InsertMusic":
 					message = adicionamusica(parts[3], parts[5]);
-					break;
-				case "signUp":
-					message = singUp(parts[3], parts[5]);
 					break;
 				default:
 					throw new IllegalArgumentException("Invalid operation: "+toDo);
@@ -104,6 +101,19 @@ public class RMI_Server extends UnicastRemoteObject implements RMI_ServerInterfa
 		}
 		return null;
 	}
+
+
+	/**
+	 *ENVIA MENSAGEM AO CLIENTE SE ADICIONADA COM SUCESSO
+	 */
+
+	public String adicionamusica(String nome,String artista){
+		String message;
+		message="Musica adicionada com sucesso";
+		return message;
+	}
+
+
 
 	public String login(String username, String password) {
 		String message;
@@ -132,17 +142,6 @@ public class RMI_Server extends UnicastRemoteObject implements RMI_ServerInterfa
 			message = "Registado com sucesso!";
 		}
 
-		return message;
-	}
-
-
-	/**
-	 *ENVIA MENSAGEM AO CLIENTE SE ADICIONADA COM SUCESSO
-	 */
-
-	public String adicionamusica(String nome,String artista){
-		String message;
-		message="Musica adicionada com sucesso";
 		return message;
 	}
 

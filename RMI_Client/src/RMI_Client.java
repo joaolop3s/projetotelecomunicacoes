@@ -30,7 +30,7 @@ public class RMI_Client {
 				//while (true) {
 					System.out.print(">> ");
 					//input = sc.nextLine();
-					input = "type | InsertMusic; name | Toda a noite; artist | Toy";
+					input = "type | login; username | tintin; password | unicorn";
 					serverInterface.sendMessage(input);
 
 					message = serverInterface.receiveMessage();
