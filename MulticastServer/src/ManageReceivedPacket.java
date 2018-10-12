@@ -57,10 +57,10 @@ public class ManageReceivedPacket extends Thread{
 
 }
 
-    public void verifyUsernameDataBase(ArrayList<String> users, String username) {
+    /*public void verifyUsernameDataBase(ArrayList<String> users, String username) {
         for (String: u users) {
             
         }
-    }
+    }*/
 }
 
