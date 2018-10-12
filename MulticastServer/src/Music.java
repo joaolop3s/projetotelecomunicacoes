@@ -13,4 +13,9 @@ public class Music {
         this.nome=nome;
         this.artist=artist;
     }
+
+    @Override
+    public String toString() {
+        return "Nome : "+this.nome+" Artista : "+this.artist;
+    }
 }

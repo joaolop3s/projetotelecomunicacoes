@@ -3,6 +3,9 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class ManageReceivedPacket extends Thread{
     MulticastSocket socket;
@@ -21,15 +24,22 @@ public class ManageReceivedPacket extends Thread{
 
     public void run() {
 
-        String[] parts = message.split("[|;] ");
+        message = message.replaceAll(" ", "");
+        String[] parts = message.split("[|;]");
+
+
 
         if (parts[6].equals("s")) {
             try {
                 String toDo = parts[1];
+                System.out.println(toDo);
                 switch (toDo) {
                     case "login":
                         System.out.println("é para fazer login");
                         login(parts[2], parts[4]);
+                        break;
+                    case "InsertMusic":
+                        adicionamusica(parts[3],parts[5]);
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid operation: "+toDo);
@@ -55,12 +65,34 @@ public class ManageReceivedPacket extends Thread{
         users.add("tintin");
 
 
-}
+    }
 
-    /*public void verifyUsernameDataBase(ArrayList<String> users, String username) {
-        for (String: u users) {
-            
+    public User verifyUsernameDataBase(ArrayList<User> users, String username) {
+        for (User u :users) {
+            System.out.println(u.getName() +" = "+username);
+            if (u.getName().equals(username)) {
+                return u;
+            }
         }
-    }*/
+        return null;
+    }
+
+
+
+
+    public void adicionamusica(String nome,String artista){
+        List<Music> musicas = new ArrayList<>();
+        Music musica = new Music(nome,artista);
+        musicas.add(musica);
+
+        Iterator<Music> it = musicas.iterator();
+
+        while(it.hasNext()){
+            System.out.println("list is:"+musicas);
+            Music str = it.next();
+
+        }
+    }
+
 }
 
