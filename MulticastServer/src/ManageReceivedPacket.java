@@ -8,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ManageReceivedPacket extends Thread{
+public class ManageReceivedPacket extends Thread {
     private MulticastSocket socket;
     private String address;
     private int port;
@@ -28,7 +28,6 @@ public class ManageReceivedPacket extends Thread{
         users.add(user1);
 
 
-
         this.start();
     }
 
@@ -40,7 +39,6 @@ public class ManageReceivedPacket extends Thread{
 
         message = message.replaceAll(" ", "");
         String[] parts = message.split("[|;]");
-
 
 
         if (parts[6].equals("s")) {
@@ -59,7 +57,7 @@ public class ManageReceivedPacket extends Thread{
                         signUp(parts[3], parts[5], users);
                         break;
                     default:
-                        throw new IllegalArgumentException("Invalid operation: "+toDo);
+                        throw new IllegalArgumentException("Invalid operation: " + toDo);
                 }
                 message = message.replaceAll("\\bs\\b", "r");
                 byte[] buffer = message.getBytes();
@@ -70,8 +68,7 @@ public class ManageReceivedPacket extends Thread{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             //System.out.println("Ignorar");
         }
     }
@@ -80,7 +77,7 @@ public class ManageReceivedPacket extends Thread{
     /********** LOGIN ***********/
 
     public String login(String username, String password, String message) {
-    public void login(String username, String password) {
+
         // ver à bd
         ArrayList<String> users = new ArrayList<>();
         users.add("tintin");
@@ -92,23 +89,24 @@ public class ManageReceivedPacket extends Thread{
                 System.out.println("username e pass corretas");
                 // mandar ao RMI server que está tudo ok
                 // não altera a message
-            }
-            else {
+            } else {
                 // mandar ao RMI server que a pass está incorreta
                 message = message.replaceAll(password, "null");
                 System.out.println("pass incorreta");
-                return message;
+
             }
-        }
-        else {
+        } else {
             // retornar que não está na BD
             System.out.println("user nao existe");
             message = message.replaceAll(username, "null");
             message = message.replaceAll(password, "null");
-            return message;
         }
-
+        return message;
     }
+
+
+
+
 
     public User verifyUsernameDataBase(CopyOnWriteArrayList<User> users, String username) {
         for (User u :users) {
@@ -137,7 +135,7 @@ public class ManageReceivedPacket extends Thread{
         }
     }
 
-}
+
 
     /*****************************/
 
