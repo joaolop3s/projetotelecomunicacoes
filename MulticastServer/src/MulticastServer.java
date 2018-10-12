@@ -2,11 +2,14 @@ import java.net.MulticastSocket;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.io.IOException;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 
 public class MulticastServer extends Thread {
     private String MULTICAST_ADDRESS = "224.0.224.0";
     private int PORT = 4321;
     private long SLEEP_TIME = 5000;
+    private CopyOnWriteArrayList<User> users = new CopyOnWriteArrayList<>();
 
     public static void main(String[] args) {
         MulticastServer server = new MulticastServer();
@@ -37,7 +40,7 @@ public class MulticastServer extends Thread {
                 String message = new String(packet.getData(), 0, packet.getLength());
                 System.out.println(">> "+message);
 
-                new ManageReceivedPacket(socket, MULTICAST_ADDRESS, PORT, message);
+                new ManageReceivedPacket(socket, MULTICAST_ADDRESS, PORT, message, users);
             }
         } catch (IOException e) {
             e.printStackTrace();

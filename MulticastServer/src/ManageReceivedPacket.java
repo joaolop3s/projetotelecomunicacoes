@@ -3,20 +3,34 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ManageReceivedPacket extends Thread{
-    MulticastSocket socket;
-    String address;
-    int port;
-    String message;
+    private MulticastSocket socket;
+    private String address;
+    private int port;
+    private String message;
+    private CopyOnWriteArrayList<User> users;
 
-    public ManageReceivedPacket(MulticastSocket socket, String address, int port, String message) {
+
+    public ManageReceivedPacket(MulticastSocket socket, String address, int port, String message, CopyOnWriteArrayList<User> users) {
         this.socket = socket;
         this.address = address;
         this.port = port;
         this.message = message;
+        this.users = users;
+
+
+        User user1 = new User("tintin", "unicorn", true);
+        users.add(user1);
+
+
 
         this.start();
+    }
+
+    public CopyOnWriteArrayList<User> getUsers() {
+        return users;
     }
 
     public void run() {
@@ -31,6 +45,12 @@ public class ManageReceivedPacket extends Thread{
                     case "login":
                         System.out.println("é para fazer login");
                         message = login(parts[3], parts[5], message);
+                        break;
+                    case "signUp":
+                        System.out.println("Registando user");
+                        // verificar se o input contem carateres ilegais
+                        // se sim, pedir input novamente
+                        signUp(parts[3], parts[5], users);
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid operation: "+toDo);
@@ -51,13 +71,12 @@ public class ManageReceivedPacket extends Thread{
         }
     }
 
-    public String login(String username, String password, String message) {
-        // ver à bd
-        ArrayList<User> users = new ArrayList<>();
-        User user1 = new User("tintin", "unicorn", true);
-        users.add(user1);
 
-        User getUser = verifyUsernameDataBase(users, username);
+    /********** LOGIN ***********/
+
+    public String login(String username, String password, String message) {
+
+        User getUser = verifyUsernameDataBase(getUsers(), username);
         if (getUser != null) {
             // getPassoword
             if (getUser.getPassword().equals(password)) {
@@ -83,7 +102,7 @@ public class ManageReceivedPacket extends Thread{
         return message;
     }
 
-    public User verifyUsernameDataBase(ArrayList<User> users, String username) {
+    public User verifyUsernameDataBase(CopyOnWriteArrayList<User> users, String username) {
         for (User u :users) {
             System.out.println(u.getName() +" = "+username);
             if (u.getName().equals(username)) {
@@ -92,5 +111,25 @@ public class ManageReceivedPacket extends Thread{
         }
         return null;
     }
-}
+
+    /*****************************/
+
+
+    /********** SIGN UP **********/
+
+    public void signUp(String username, String password, CopyOnWriteArrayList<User> users) {
+        // adiciona à BD
+        User user;
+
+        if (users.isEmpty()) {
+            user = new User(username, password, true);
+        } else {
+            user = new User(username, password, false);
+        }
+        users.add(user);
+
+    }
+
+    /*****************************/
+ }
 
