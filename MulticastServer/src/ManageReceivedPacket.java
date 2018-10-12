@@ -21,10 +21,7 @@ public class ManageReceivedPacket extends Thread{
 
     public void run() {
 
-        message = message.replaceAll(" ", "");
-        String[] parts = message.split("[|;]");
-
-
+        String[] parts = message.split("[|;] ");
 
         if (parts[6].equals("s")) {
             try {
@@ -33,10 +30,6 @@ public class ManageReceivedPacket extends Thread{
                     case "login":
                         System.out.println("é para fazer login");
                         login(parts[2], parts[4]);
-                        break;
-                    case "InsertMusic":
-                        System.out.println("fodeime ");
-                        //adicionamusica(parts[2],parts[4]);
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid operation: "+toDo);
@@ -64,5 +57,10 @@ public class ManageReceivedPacket extends Thread{
 
 }
 
+    public void verifyUsernameDataBase(ArrayList<String> users, String username) {
+        for (String: u users) {
+            
+        }
+    }
 }
 
