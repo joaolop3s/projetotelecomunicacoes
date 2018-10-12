@@ -88,10 +88,12 @@ public class RMI_Server extends UnicastRemoteObject implements RMI_ServerInterfa
 				case "InsertMusic":
 					message = adicionamusica(parts[3], parts[5]);
 					break;
+				case "signUp":
+					message = singUp(parts[3], parts[5]);
+					break;
 				default:
 					throw new IllegalArgumentException("Invalid operation: "+toDo);
 			}
-
 
 			return message;
 
@@ -118,6 +120,21 @@ public class RMI_Server extends UnicastRemoteObject implements RMI_ServerInterfa
 		return message;
 	}
 
+	public String singUp(String username, String password) {
+		String message;
+
+		if (username.equals("null") && password.equals("null")) {
+			message = "User e/ou Password inválidos\ncriar conta...";
+		} else if (password.equals("null")) {
+			message = "Password inválida\nInsira novamente...";
+		}
+		else {
+			message = "Registado com sucesso!";
+		}
+
+		return message;
+	}
+
 
 	/**
 	 *ENVIA MENSAGEM AO CLIENTE SE ADICIONADA COM SUCESSO
@@ -128,8 +145,6 @@ public class RMI_Server extends UnicastRemoteObject implements RMI_ServerInterfa
 		message="Musica adicionada com sucesso";
 		return message;
 	}
-
-
 
 
 
