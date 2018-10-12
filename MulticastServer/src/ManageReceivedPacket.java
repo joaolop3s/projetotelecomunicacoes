@@ -21,7 +21,8 @@ public class ManageReceivedPacket extends Thread{
 
     public void run() {
 
-        String[] parts = message.split("[|;] ");
+        message = message.replaceAll(" ", "");
+        String[] parts = message.split("[|;]");
 
         if (parts[6].equals("s")) {
             try {
@@ -29,15 +30,16 @@ public class ManageReceivedPacket extends Thread{
                 switch (toDo) {
                     case "login":
                         System.out.println("é para fazer login");
-                        login(parts[2], parts[4]);
+                        message = login(parts[3], parts[5], message);
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid operation: "+toDo);
                 }
+
                 message = message.replaceAll("\\bs\\b", "r");
                 byte[] buffer = message.getBytes();
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(this.address), this.port);
-                //System.out.println("mensagem enviada: " + message);
+                System.out.println("mensagem enviada: " + message);
                 socket.send(packet);
 
             } catch (IOException e) {
@@ -49,18 +51,46 @@ public class ManageReceivedPacket extends Thread{
         }
     }
 
-    public void login(String username, String password) {
+    public String login(String username, String password, String message) {
         // ver à bd
-        ArrayList<String> users = new ArrayList<>();
-        users.add("tintin");
+        ArrayList<User> users = new ArrayList<>();
+        User user1 = new User("tintin", "unicorn", true);
+        users.add(user1);
 
-
-}
-
-    public void verifyUsernameDataBase(ArrayList<String> users, String username) {
-        for (String: u users) {
-            
+        User getUser = verifyUsernameDataBase(users, username);
+        if (getUser != null) {
+            // getPassoword
+            if (getUser.getPassword().equals(password)) {
+                System.out.println("username e pass corretas");
+                // mandar ao RMI server que está tudo ok
+                // não altera a message
+            }
+            else {
+                // mandar ao RMI server que a pass está incorreta
+                message = message.replaceAll(password, "null");
+                System.out.println("pass incorreta");
+                return message;
+            }
         }
+        else {
+            // retornar que não está na BD
+            System.out.println("user nao existe");
+            message = message.replaceAll(username, "null");
+            message = message.replaceAll(password, "null");
+            return message;
+        }
+
+        return message;
+    }
+
+    public User verifyUsernameDataBase(ArrayList<User> users, String username) {
+        for (User u :users) {
+            System.out.println(u.getName() +" = "+username);
+            if (u.getName().equals(username)) {
+                return u;
+            }
+        }
+        return null;
     }
 }
 

@@ -42,10 +42,7 @@ public class RMI_Server extends UnicastRemoteObject implements RMI_ServerInterfa
 			message += " | s";
 			System.out.println(">> "+message+" enviada");
 
-			/*
-			// retirar -r
-			String[] parts = message.split("-");
-			message = parts[0];*/
+
 
 			byte[] buffer = message.getBytes();
 			InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
@@ -75,6 +72,20 @@ public class RMI_Server extends UnicastRemoteObject implements RMI_ServerInterfa
 			String message = new String(packet.getData(), 0, packet.getLength());
 			System.out.println("<< "+message+" recebida");
 
+			// tratar mensagem
+			message = message.replaceAll(" ", "");
+			String[] parts = message.split("[|;]");
+
+			String toDo = parts[1];
+			switch (toDo) {
+				case "login":
+					message = login(parts[3], parts[5]);
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid operation: "+toDo);
+			}
+
+
 			return message;
 
 		} catch(IOException e) {
@@ -83,8 +94,24 @@ public class RMI_Server extends UnicastRemoteObject implements RMI_ServerInterfa
 			socket.close();
 		}
 		return null;
-
 	}
+
+	public String login(String username, String password) {
+		String message;
+
+		if (username.equals("null") && password.equals("null")) {
+			message = "User e Password não encontrados\ncriar conta...";
+		} else if (password.equals("null")) {
+			message = "Password incorreta\nInsira novamente...";
+		}
+		else {
+			message = "Logged in";
+		}
+
+		return message;
+	}
+
+
 
 
 

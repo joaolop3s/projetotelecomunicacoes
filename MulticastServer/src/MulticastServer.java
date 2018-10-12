@@ -24,6 +24,7 @@ public class MulticastServer extends Thread {
         try {
             // thread para ler em simultaneo
             // estar sempre a ler
+
             socket = new MulticastSocket(PORT);  // create socket and bind it
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
             socket.joinGroup(group);
