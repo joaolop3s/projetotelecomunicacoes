@@ -9,7 +9,6 @@ public class RMI_Client {
 		/* This might be necessary if you ever need to download classes:
 		System.getProperties().put("java.security.policy", "policy.all");
 		System.setSecurityManager(new RMISecurityManager());
-		VOU MUDAR ESTA MERDA TODA
 		*/
 
 		Scanner sc = new Scanner(System.in);
@@ -31,7 +30,7 @@ public class RMI_Client {
 				//while (true) {
 					System.out.print(">> ");
 					//input = sc.nextLine();
-					input = "type | login; username | tintin; password | unicorn";
+					input = "type | InsertMusic; name | Toda a noite; artist | Toy";
 					serverInterface.sendMessage(input);
 
 					message = serverInterface.receiveMessage();
